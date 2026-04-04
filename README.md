@@ -1,10 +1,10 @@
-# AegleInternal
+# Aegleseeker
 
 A DirectX 11 internal hook with ImGui interface for advanced client modifications. This project provides a DLL injection framework with a comprehensive feature set including hitbox extensions, motion blur, keystroke tracking, and more.
 
 ## Overview
 
-AegleInternal is an internal client modification framework that hooks into DirectX 11 applications. It provides:
+Aegleseeker is an internal client modification framework that hooks into DirectX 11 applications. It provides:
 
 - **DirectX 11 Integration**: Full D3D11 hook for frame-level access
 - **ImGui Interface**: Modern, draggable UI for in-game menu
@@ -235,6 +235,8 @@ Contributions are welcome. Please ensure code follows the existing style and inc
 ## Support
 
 For issues, questions, or feature requests, please open an issue on the repository.
+
+Discord: notvyzer
 
 ---
 
