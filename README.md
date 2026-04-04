@@ -183,7 +183,7 @@ The project hooks `IDXGISwapChain::Present()` and `ResizeBuffers()` to intercept
 
 ## Platform Support
 
-- **OS**: Windows 7+ (x64)
+- **OS**: Windows 10+ (x64)
 - **Compilers**: MSVC 2015+, MinGW-w64
 - **Architecture**: x86-64 only
 - **Graphics**: DirectX 11
