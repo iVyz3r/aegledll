@@ -21,7 +21,7 @@ Aegleseeker is an internal client modification framework that hooks into DirectX
 ## Requirements
 
 ### System
-- Windows 7 or later (x64)
+- Windows 10 or later (x64)
 - DirectX 11 compatible GPU
 - Visual Studio 2015+ or MinGW-w64
 
