@@ -41,7 +41,6 @@ Aegleseeker is an internal client modification framework that hooks into DirectX
 - Visual Studio 2015+ or MinGW-w64
 
 ### Build Dependencies
-- **CMake** 3.15 or later
 - **Compiler**:
   - MSVC (Visual Studio 2015+) OR
   - GCC/MinGW (MinGW-w64 recommended)
@@ -53,23 +52,7 @@ Aegleseeker is an internal client modification framework that hooks into DirectX
 
 ## Building
 
-### Using CMake
-
-```bash
-# Create build directory
-mkdir build
-cd build
-
-# Configure project
-cmake .. -DCMAKE_BUILD_TYPE=Release
-
-# Build
-cmake --build . --config Release
-```
-
-The compiled DLL will be located at: `build/internal_hook.dll`
-
-### Using PowerShell (Legacy)
+### Using PowerShell (recomended)
 
 ```powershell
 .\build.ps1
@@ -82,7 +65,6 @@ This generates the DLL in `build/` directory.
 ```
 aegledll/
 ├── dllmain.cpp              # Main DLL entry point and hook implementation
-├── CMakeLists.txt           # CMake build configuration
 ├── build.ps1                # PowerShell build script
 ├── Animations/              # Centralized animation and easing system
 │   ├── Animations.hpp       # Animation function declarations
@@ -156,7 +138,7 @@ aegledll/
 
 ## Usage
 
-1. **Compile** the project using CMake or PowerShell script
+1. **Compile** the project using PowerShell script
 2. **Inject** `internal_hook.dll` into a DirectX 11 application
 3. **Press INSERT** key to toggle the menu
 4. **Configure** features via the tabbed interface
@@ -165,17 +147,6 @@ aegledll/
 ### Keyboard Shortcuts
 - **INSERT**: Toggle main menu
 - **Drag windows**: Left mouse button when menu is open
-
-## Configuration
-
-All settings are stored in ImGui's `.ini` file for persistence. The menu provides real-time sliders and toggles for:
-
-- Reach distance
-- Hitbox scale
-- Motion blur intensity and mode
-- Animation timings
-- Color customization
-- Positioning offsets
 
 ## Technical Details
 
@@ -197,7 +168,7 @@ The project hooks `IDXGISwapChain::Present()` and `ResizeBuffers()` to intercept
 
 ## Build System
 
-The project uses CMake for cross-platform builds with support for both MSVC and MinGW compilers. The build system is organized as follows:
+- _CMake has been removed_
 
 ### Source Organization
 - **Core Sources**: Main application logic and module implementations
@@ -251,16 +222,10 @@ Features are organized in a hierarchical module system:
 ## Building on Different Compilers
 
 ### Visual Studio
-```bash
-cmake .. -G "Visual Studio 16 2019" -A x64
-cmake --build . --config Release
-```
+- _CMake has been removed_
 
 ### MinGW-w64
-```bash
-cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
-cmake --build .
-```
+- _CMake has been removed_
 
 ## Troubleshooting
 
