@@ -8,6 +8,8 @@ Aegleseeker is an internal client modification framework that hooks into DirectX
 
 - **DirectX 11 Integration**: Full D3D11 hook for frame-level access
 - **ImGui Interface**: Modern, draggable UI for in-game menu
+- **Modular Architecture**: Well-organized feature modules (Combat, Movement, Visuals, Misc)
+- **Centralized Animation System**: Unified easing functions and animation utilities
 - **Advanced Features**:
   - Reach/Hitbox modifications
   - AutoSprint functionality
@@ -17,6 +19,7 @@ Aegleseeker is an internal client modification framework that hooks into DirectX
   - FullBright mode
   - Frame rate control (Unlock FPS)
   - Watermark display
+  - Timer modifications
   
 ## Requirements
 
@@ -52,7 +55,7 @@ cmake .. -DCMAKE_BUILD_TYPE=Release
 cmake --build . --config Release
 ```
 
-The compiled DLL will be located at: `build/bin/internal_hook.dll`
+The compiled DLL will be located at: `build/internal_hook.dll`
 
 ### Using PowerShell (Legacy)
 
@@ -65,10 +68,35 @@ This generates the DLL in `build/` directory.
 ## Project Structure
 
 ```
-AegleDLL/
+aegledll/
 ├── dllmain.cpp              # Main DLL entry point and hook implementation
 ├── CMakeLists.txt           # CMake build configuration
 ├── build.ps1                # PowerShell build script
+├── Animations/              # Centralized animation and easing system
+│   ├── Animations.hpp       # Animation function declarations
+│   └── Animations.cpp       # Easing implementations (cubic, exponential, elastic)
+├── GUI/                     # Graphical User Interface
+│   └── GUI.cpp              # ImGui-based menu system
+├── Hook/                    # DirectX 11 hooking implementation
+│   └── Hook.cpp             # Swap chain and rendering hooks
+├── Input/                   # Input handling system
+│   └── Input.cpp            # Keyboard/mouse input processing
+├── Modules/                 # Feature modules organized by category
+│   ├── Combat/              # Combat-related modifications
+│   │   ├── Hitbox/          # Hitbox expansion system
+│   │   └── Reach/           # Reach distance modifications
+│   ├── Movement/            # Movement enhancements
+│   │   ├── AutoSprint/      # Automatic sprinting
+│   │   └── Timer/           # Game speed modifications
+│   ├── Visuals/             # Visual enhancements
+│   │   ├── CPSCounter/      # Clicks per second display
+│   │   ├── FullBright/      # Enhanced brightness
+│   │   ├── Keystrokes/      # Keyboard input display
+│   │   ├── MotionBlur/      # GPU motion blur effects
+│   │   ├── RenderInfo/      # Performance metrics overlay
+│   │   └── Watermark/       # Custom watermark
+│   └── Misc/                # Miscellaneous features
+│       └── UnlockFPS/       # Frame rate unlocking
 ├── ImGui/                   # ImGui library
 │   ├── imgui.cpp
 │   ├── imgui_draw.cpp
@@ -97,8 +125,8 @@ AegleDLL/
 
 ### Movement
 - **AutoSprint**: Continuous sprint without interaction
-- **FullBright**: Enhanced visibility in dark areas
 - **Timer**: Frame time multiplier for speed modifications
+- **FullBright**: Enhanced visibility in dark areas
 - **Unlock FPS**: Remove frame rate limitations
 
 ### Visuals
@@ -149,22 +177,34 @@ The project hooks `IDXGISwapChain::Present()` and `ResizeBuffers()` to intercept
 - Mouse and keyboard state tracking
 
 ### Animation System
-- Easing functions (cubic, exponential, elastic)
-- Smooth transitions with configurable duration
-- Chroma color cycling effects
-- Per-module state animations
+- **Centralized Framework**: All easing functions in `Animations` namespace
+- **Easing Functions**: Cubic, quadratic, exponential, and elastic easing
+- **Animation Utilities**: Progress calculation and value clamping
+- **Thread-Safe Design**: Static methods for safe concurrent access
+- **Smooth Transitions**: Configurable duration and interpolation
 
-## Compilation Flags
+## Build System
 
-### Performance Optimization
-- `-O2`: Optimization level 2
-- `-march=x86-64`: Target x86-64 architecture
-- `-m64`: 64-bit compilation
+The project uses CMake for cross-platform builds with support for both MSVC and MinGW compilers. The build system is organized as follows:
 
-### Linking
-- `-static`: Static C runtime linking
-- `-static-libgcc`: Static GCC library linking
-- `-static-libstdc++`: Static C++ standard library
+### Source Organization
+- **Core Sources**: Main application logic and module implementations
+- **ImGui Sources**: GUI framework implementation
+- **Backend Sources**: Platform-specific ImGui backends (DX11, Win32)
+- **MinHook Sources**: API hooking library
+
+### Module Structure
+Features are organized in a hierarchical module system:
+- `Modules/Combat/`: Combat modifications (Hitbox, Reach)
+- `Modules/Movement/`: Movement enhancements (AutoSprint, Timer)
+- `Modules/Visuals/`: Visual features (MotionBlur, Keystrokes, etc.)
+- `Modules/Misc/`: Miscellaneous utilities (UnlockFPS)
+
+### Dependencies
+- **ImGui**: Included as source files
+- **MinHook**: Lightweight API hooking library
+- **DirectX 11**: Windows graphics API
+- **Windows SDK**: System libraries and headers
 
 ## Dependencies
 
@@ -240,5 +280,5 @@ Discord: notvyzer
 
 ---
 
-**Last Updated**: April 3, 2026  
+**Last Updated**: April 4, 2026  
 **Status**: Active Development

@@ -40,6 +40,21 @@ endif()
 # Main project sources
 set(CORE_SOURCES
     dllmain.cpp
+    Animations/Animations.cpp
+    GUI/GUI.cpp
+    Hook/Hook.cpp
+    Input/Input.cpp
+    Reach.cpp
+    Hitbox.cpp
+    AutoSprint.cpp
+    Timer.cpp
+    FullBright.cpp
+    Modules/Visuals/RenderInfo/RenderInfo.cpp
+    Modules/Visuals/Watermark/Watermark.cpp
+    Modules/Visuals/MotionBlur/MotionBlur.cpp
+    Modules/Visuals/Keystrokes/Keystrokes.cpp
+    Modules/Visuals/CPSCounter/CPSCounter.cpp
+    Modules/Visuals/UnlockFPS/UnlockFPS.cpp
 )
 
 # ImGui sources

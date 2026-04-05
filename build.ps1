@@ -6,10 +6,32 @@ $BuildDir    = "obj"
 $BinDir      = "build"
 $Output      = Join-Path $BinDir "internal_hook.dll"
 
-$Sources = "dllmain.cpp", 
-           "ImGui/imgui.cpp", "ImGui/imgui_draw.cpp", "ImGui/imgui_widgets.cpp", "ImGui/imgui_tables.cpp", `
-           "ImGui/backend/imgui_impl_dx11.cpp", "ImGui/backend/imgui_impl_win32.cpp", 
-           "minhook/buffer.c", "minhook/hook.c", "minhook/trampoline.c", "minhook/hde64.c"
+$Sources =  "dllmain.cpp", 
+            "ImGui/imgui.cpp", 
+            "ImGui/imgui_draw.cpp", 
+            "ImGui/imgui_widgets.cpp", 
+            "ImGui/imgui_tables.cpp", `
+            "ImGui/backend/imgui_impl_dx11.cpp", 
+            "ImGui/backend/imgui_impl_win32.cpp", 
+            "Modules/Combat/Reach/Reach.cpp",
+            "Modules/Combat/Hitbox/Hitbox.cpp",
+            "Modules/Movement/AutoSprint/AutoSprint.cpp",
+            "Modules/Movement/Timer/Timer.cpp",
+            "Modules/Visuals/FullBright/FullBright.cpp",
+            "Modules/Visuals/RenderInfo/RenderInfo.cpp",
+            "Modules/Visuals/Watermark/Watermark.cpp",
+            "Modules/Visuals/MotionBlur/MotionBlur.cpp",
+            "Modules/Visuals/Keystrokes/Keystrokes.cpp",
+            "Modules/Visuals/CPSCounter/CPSCounter.cpp",
+            "Modules/Misc/UnlockFPS/UnlockFPS.cpp",
+            "GUI/GUI.cpp",
+            "Hook/Hook.cpp",
+            "Input/Input.cpp",
+            "Animations/Animations.cpp",
+            "minhook/buffer.c", 
+            "minhook/hook.c", 
+            "minhook/trampoline.c", 
+            "minhook/hde64.c"
 
 $Flags = "-O2", "-s", "-fpermissive", "-m64", "-march=x86-64", "-static", "-static-libgcc", "-static-libstdc++", "-I."
 $Libs  = "-ld3d11", "-ldxgi", "-ld3dcompiler", "-ldwmapi", "-limm32", "-luser32", "-lgdi32", "-lpsapi"
@@ -25,7 +47,7 @@ function Write-Log([string]$Msg, [string]$Type = "Info") {
 }
 
 Clear-Host
-Write-Log "Starting Build (x64)..." "Info"
+Write-Log "Starting Build of $ProjectName (x64)..." "Info"
 
 if (!(Test-Path $BuildDir)) { New-Item -ItemType Directory -Path $BuildDir | Out-Null }
 if (!(Test-Path $BinDir))   { New-Item -ItemType Directory -Path $BinDir | Out-Null }
@@ -67,6 +89,7 @@ if ($LASTEXITCODE -eq 0) {
     Write-Host "Generated DLL: $Output"
     Write-Host "File Size:       $Size KB"
     Write-Host "----------------------------------" -ForegroundColor Gray
+    Write-Host "Exit Code: $LASTEXITCODE" -ForegroundColor Gray
 } else {
     Write-Log "Error occurred while generating the DLL." "Error"
 }
