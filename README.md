@@ -1,6 +1,7 @@
-<p align="center">
+<p align="center" 
+<p style="font-weight: bold;">
 **Aegleseeker**
-
+</p>
 A DirectX 11 internal hook with ImGui interface for advanced client modifications. This project provides a DLL injection framework with a comprehensive feature set including hitbox extensions, motion blur, keystroke tracking, and more.
 </p>
 <p align="center">
