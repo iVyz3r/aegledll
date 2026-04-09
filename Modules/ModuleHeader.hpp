@@ -4,6 +4,7 @@
 #include "Movement/Timer/Timer.hpp"
 #include "Visuals/FullBright/FullBright.hpp"
 #include "Visuals/RenderInfo/RenderInfo.hpp"
+#include "Terminal/Terminal.hpp"
 #include "../Utils/HudElement.hpp"
 #include "Visuals/Watermark/Watermark.hpp"
 #include "Visuals/MotionBlur/MotionBlur.hpp"

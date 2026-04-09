@@ -367,6 +367,7 @@ HRESULT STDMETHODCALLTYPE hkPresent_Impl(IDXGISwapChain* pSwapChain, UINT SyncIn
             Watermark::Initialize(&g_watermarkHud);
             Keystrokes::Initialize(&g_keystrokesHud);
             CPSCounter::Initialize(&g_cpsHud);
+            Terminal::Initialize();
 
             // Scan for AutoSprint pattern
             HMODULE hModule = GetModuleHandleA(NULL);

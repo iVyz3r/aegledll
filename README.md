@@ -1,6 +1,6 @@
 # Aegleseeker
   
-A DirectX 11 internal hook with ImGui interface for advanced client modifications. This project provides a DLL injection framework with a comprehensive feature set including hitbox extensions, motion blur, keystroke tracking, and more.
+A DirectX 11 internal hook with an ImGui interface for runtime client modification. This project provides a modular DLL payload with in-game feature toggles, a command terminal, and JSON-based config persistence.
 
 <p align="center">
   <img src="docs/preview.png" width="700"/>
@@ -63,51 +63,129 @@ This generates the DLL in `build/` directory.
 ## Project Structure
 
 ```
-aegledll/
-├── dllmain.cpp              # Main DLL entry point and hook implementation
-├── build.ps1                # PowerShell build script
-├── Animations/              # Centralized animation and easing system
-│   ├── Animations.hpp       # Animation function declarations
-│   └── Animations.cpp       # Easing implementations (cubic, exponential, elastic)
-├── GUI/                     # Graphical User Interface
-│   └── GUI.cpp              # ImGui-based menu system
-├── Hook/                    # DirectX 11 hooking implementation
-│   └── Hook.cpp             # Swap chain and rendering hooks
-├── Input/                   # Input handling system
-│   └── Input.cpp            # Keyboard/mouse input processing
-├── Modules/                 # Feature modules organized by category
-│   ├── Combat/              # Combat-related modifications
-│   │   ├── Hitbox/          # Hitbox expansion system
-│   │   └── Reach/           # Reach distance modifications
-│   ├── Movement/            # Movement enhancements
-│   │   ├── AutoSprint/      # Automatic sprinting
-│   │   └── Timer/           # Game speed modifications
-│   ├── Visuals/             # Visual enhancements
-│   │   ├── CPSCounter/      # Clicks per second display
-│   │   ├── FullBright/      # Enhanced brightness
-│   │   ├── Keystrokes/      # Keyboard input display
-│   │   ├── MotionBlur/      # GPU motion blur effects
-│   │   ├── RenderInfo/      # Performance metrics overlay
-│   │   └── Watermark/       # Custom watermark
-│   └── Misc/                # Miscellaneous features
-│       └── UnlockFPS/       # Frame rate unlocking
-├── ImGui/                   # ImGui library
-│   ├── imgui.cpp
-│   ├── imgui_draw.cpp
-│   ├── imgui_widgets.cpp
-│   ├── imgui_tables.cpp
-│   ├── backend/
-│   │   ├── imgui_impl_dx11.cpp
-│   │   └── imgui_impl_win32.cpp
-│   └── [header files]
-├── minhook/                 # MinHook library for API hooks
-│   ├── hook.c
-│   ├── buffer.c
-│   ├── trampoline.c
-│   ├── hde64.c
-│   └── [header files]
-└── build/                   # Build output directory
-    └── internal_hook.dll
+│   .gitignore                  # Files to ignore in git
+│   build.ps1                   # PowerShell build script
+│   dllmain.cpp                 # DLL entry and hook setup
+│   README.md                   # Project documentation
+│   
+├───Animations
+│       Animations.cpp          # Easing function implementations
+│       Animations.hpp          # Animation declarations
+│       
+├───build
+│       internal_hook.dll       # Compiled output DLL
+│       
+├───GUI
+│       GUI.cpp                 # ImGui menu rendering
+│       GUI.hpp                 # GUI declarations
+│       
+├───Hook
+│       Hook.cpp                # DirectX 11 hook logic
+│       Hook.hpp                # Hook declarations
+│       
+├───ImGui
+│   │   imconfig.h              # ImGui configuration
+│   │   imgui.cpp               # ImGui core implementation
+│   │   imgui.h                 # ImGui interface definitions
+│   │   imgui_demo.cpp          # ImGui demo examples
+│   │   imgui_draw.cpp          # ImGui drawing routines
+│   │   imgui_internal.h        # Internal ImGui declarations
+│   │   imgui_tables.cpp        # Table widget implementation
+│   │   imgui_widgets.cpp       # Widget implementation
+│   │   imstb_rectpack.h        # Packing helper header
+│   │   imstb_textedit.h        # Text edit helper
+│   │   imstb_truetype.h        # Font rasterizer helper
+│   │   
+│   └───backend
+│           imgui_impl_dx11.cpp # DX11 backend integration
+│           imgui_impl_dx11.h   # DX11 backend declarations
+│           imgui_impl_win32.cpp# Win32 backend integration
+│           imgui_impl_win32.h  # Win32 backend declarations
+│           
+├───Input
+│       Input.cpp               # Keyboard/mouse input processing
+│       Input.hpp               # Input definitions
+│       
+├───minhook
+│       buffer.c                # MinHook buffer handling
+│       buffer.h                # Buffer declarations
+│       hde32.c                 # 32-bit instruction decoder
+│       hde32.h                 # 32-bit decoder header
+│       hde64.c                 # 64-bit instruction decoder
+│       hde64.h                 # 64-bit decoder header
+│       hook.c                  # Hook implementation
+│       MinHook.def             # Library export definitions
+│       MinHook.h               # MinHook API declarations
+│       MinHook.rc              # Resource script
+│       pstdint.h               # Fixed-width integer types
+│       table32.h               # 32-bit hook tables
+│       table64.h               # 64-bit hook tables
+│       trampoline.c            # Hook trampoline generation
+│       trampoline.h            # Trampoline declarations
+│       
+├───Modules
+│   │   ModuleHeader.hpp        # Central module includes
+│   │   
+│   ├───Combat
+│   │   ├───Hitbox
+│   │   │       Hitbox.cpp       # Hitbox feature logic
+│   │   │       Hitbox.hpp       # Hitbox declarations
+│   │   │       
+│   │   └───Reach
+│   │           Reach.cpp        # Reach feature logic
+│   │           Reach.hpp        # Reach declarations
+│   │           
+│   ├───Misc
+│   │   └───UnlockFPS
+│   │           UnlockFPS.cpp    # FPS unlock logic
+│   │           UnlockFPS.hpp    # UnlockFPS declarations
+│   │           
+│   ├───Movement
+│   │   ├───AutoSprint
+│   │   │       AutoSprint.cpp   # Auto-sprint feature logic
+│   │   │       AutoSprint.hpp   # AutoSprint declarations
+│   │   │       
+│   │   └───Timer
+│   │           Timer.cpp        # Timer modification logic
+│   │           Timer.hpp        # Timer declarations
+│   │           
+│   ├───Terminal
+│   │       Terminal.cpp         # In-game terminal logic
+│   │       Terminal.hpp         # Terminal declarations
+│   │       
+│   └───Visuals
+│       ├───CPSCounter
+│       │       CPSCounter.cpp   # CPS counter overlay logic
+│       │       CPSCounter.hpp   # CPS counter declarations
+│       │       
+│       ├───FullBright
+│       │       FullBright.cpp   # Full bright feature logic
+│       │       FullBright.hpp   # FullBright declarations
+│       │       
+│       ├───Keystrokes
+│       │   │   Keystrokes.cpp   # Keystroke overlay logic
+│       │   │   Keystrokes.hpp   # Keystrokes declarations
+│       │   │   
+│       │   └───Helper
+│       │           HelperFunctions.hpp # Keystrokes helper utilities
+│       │           
+│       ├───MotionBlur
+│       │       MotionBlur.cpp    # Motion blur effect logic
+│       │       MotionBlur.hpp    # MotionBlur declarations
+│       │       
+│       ├───RenderInfo
+│       │       RenderInfo.cpp    # Render info overlay logic
+│       │       RenderInfo.hpp    # RenderInfo declarations
+│       │       
+│       └───Watermark
+│               Watermark.cpp    # Watermark display logic
+│               Watermark.hpp    # Watermark declarations
+│               
+├───nlohmann
+│       json.hpp                # JSON parser header
+│       
+└───Utils
+        HudElement.hpp         # HUD element definitions
 ```
 
 ## Features
@@ -168,7 +246,9 @@ The project hooks `IDXGISwapChain::Present()` and `ResizeBuffers()` to intercept
 
 ## Build System
 
-- _CMake has been removed_
+This project uses the included PowerShell build script:
+
+- `build.ps1`: PowerShell build script using `g++`
 
 ### Source Organization
 - **Core Sources**: Main application logic and module implementations
@@ -222,10 +302,10 @@ Features are organized in a hierarchical module system:
 ## Building on Different Compilers
 
 ### Visual Studio
-- _CMake has been removed_
+- Build using the included build script or your preferred MSVC workflow.
 
 ### MinGW-w64
-- _CMake has been removed_
+- Use `build.ps1` and ensure `g++` is installed.
 
 ## Troubleshooting
 

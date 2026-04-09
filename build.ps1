@@ -24,6 +24,7 @@ $Sources =  "dllmain.cpp",
             "Modules/Visuals/Keystrokes/Keystrokes.cpp",
             "Modules/Visuals/CPSCounter/CPSCounter.cpp",
             "Modules/Misc/UnlockFPS/UnlockFPS.cpp",
+            "Modules/Terminal/Terminal.cpp",
             "GUI/GUI.cpp",
             "Hook/Hook.cpp",
             "Input/Input.cpp",
@@ -32,7 +33,7 @@ $Sources =  "dllmain.cpp",
             "minhook/hook.c", 
             "minhook/trampoline.c", 
             "minhook/hde64.c"
-
+# -static tag can cause issues with some libraries, so we will only use it for the final linking step   
 $Flags = "-O2", "-s", "-fpermissive", "-m64", "-march=x86-64", "-static", "-static-libgcc", "-static-libstdc++", "-I."
 $Libs  = "-ld3d11", "-ldxgi", "-ld3dcompiler", "-ldwmapi", "-limm32", "-luser32", "-lgdi32", "-lpsapi"
 

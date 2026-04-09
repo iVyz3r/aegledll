@@ -1,5 +1,6 @@
 #include "GUI.hpp"
 #include "../Animations/Animations.hpp"
+#include "../Modules/Terminal/Terminal.hpp"
 #include <windows.h>
 #include <cmath>
 
@@ -224,6 +225,22 @@ void GUI::RenderMenu(float screenWidth, float screenHeight) {
                     ImGui::PushStyleVar(ImGuiStyleVar_Alpha, alphaFade);
                     
                     UnlockFPS::RenderMenu();
+                    
+                    ImGui::PopStyleVar();
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem("Terminal")) {
+                    g_currentTab = 4;
+                    if (g_currentTab != prevTab) {
+                        g_tabChangeTime = GetTickCount64();
+                        g_tabAnim = 0.0f;
+                        g_previousTab = prevTab;
+                    }
+                    
+                    float alphaFade = (g_tabChangeTime > 0) ? Animations::SmoothInertia(g_tabAnim) : 1.0f;
+                    ImGui::PushStyleVar(ImGuiStyleVar_Alpha, alphaFade);
+                    
+                    Terminal::RenderConsole();
                     
                     ImGui::PopStyleVar();
                     ImGui::EndTabItem();
