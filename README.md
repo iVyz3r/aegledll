@@ -64,128 +64,166 @@ This generates the DLL in `build/` directory.
 
 ```
 aegledll/
-│   build.ps1                   # PowerShell build script
-│   dllmain.cpp                 # DLL entry and hook setup
-│   README.md                   # Project documentation
+│   build.ps1
+│   dllmain.cpp
+│   README.md
 │   
 ├───Animations
-│       Animations.cpp          # Easing function implementations
-│       Animations.hpp          # Animation declarations
+│       Animations.cpp
+│       Animations.hpp
 │       
-├───build
-│       internal_hook.dll       # Compiled output DLL
+├───Assets
+│   │   clicksound.mp3
+│   │   clicksound_1.mp3
+│   │   clicksound_2.mp3
+│   │   logo.png
+│   │   resource.h
+│   │   resources.rc
+│   │   
+│   └───stb
+│           stb_image.h
+│           stb_image_impl.cpp
+│           
+├───Config
+│       ConfigManager.cpp
+│       ConfigManager.hpp
 │       
 ├───GUI
-│       GUI.cpp                 # ImGui menu rendering
-│       GUI.hpp                 # GUI declarations
-│       
+│   │   GUI.cpp
+│   │   GUI.hpp
+│   │   
+│   └───DX11
+│           ImGuiRenderer.cpp
+│           ImGuiRenderer.hpp
+│           
 ├───Hook
-│       Hook.cpp                # DirectX 11 hook logic
-│       Hook.hpp                # Hook declarations
+│       Hook.cpp
+│       Hook.hpp
 │       
 ├───ImGui
-│   │   imconfig.h              # ImGui configuration
-│   │   imgui.cpp               # ImGui core implementation
-│   │   imgui.h                 # ImGui interface definitions
-│   │   imgui_demo.cpp          # ImGui demo examples
-│   │   imgui_draw.cpp          # ImGui drawing routines
-│   │   imgui_internal.h        # Internal ImGui declarations
-│   │   imgui_tables.cpp        # Table widget implementation
-│   │   imgui_widgets.cpp       # Widget implementation
-│   │   imstb_rectpack.h        # Packing helper header
-│   │   imstb_textedit.h        # Text edit helper
-│   │   imstb_truetype.h        # Font rasterizer helper
+│   │   imconfig.h
+│   │   imgui.cpp
+│   │   imgui.h
+│   │   imgui_demo.cpp
+│   │   imgui_draw.cpp
+│   │   imgui_internal.h
+│   │   imgui_tables.cpp
+│   │   imgui_widgets.cpp
+│   │   imstb_rectpack.h
+│   │   imstb_textedit.h
+│   │   imstb_truetype.h
 │   │   
-│   └───backend
-│           imgui_impl_dx11.cpp # DX11 backend integration
-│           imgui_impl_dx11.h   # DX11 backend declarations
-│           imgui_impl_win32.cpp# Win32 backend integration
-│           imgui_impl_win32.h  # Win32 backend declarations
+│   ├───backend
+│   │       imgui_impl_dx11.cpp
+│   │       imgui_impl_dx11.h
+│   │       imgui_impl_win32.cpp
+│   │       imgui_impl_win32.h
+│   │       
+│   └───imgui-markdown
+│           imgui-markdown.h
 │           
 ├───Input
-│       Input.cpp               # Keyboard/mouse input processing
-│       Input.hpp               # Input definitions
+│       Input.cpp
+│       Input.hpp
 │       
 ├───minhook
-│       buffer.c                # MinHook buffer handling
-│       buffer.h                # Buffer declarations
-│       hde32.c                 # 32-bit instruction decoder
-│       hde32.h                 # 32-bit decoder header
-│       hde64.c                 # 64-bit instruction decoder
-│       hde64.h                 # 64-bit decoder header
-│       hook.c                  # Hook implementation
-│       MinHook.def             # Library export definitions
-│       MinHook.h               # MinHook API declarations
-│       MinHook.rc              # Resource script
-│       pstdint.h               # Fixed-width integer types
-│       table32.h               # 32-bit hook tables
-│       table64.h               # 64-bit hook tables
-│       trampoline.c            # Hook trampoline generation
-│       trampoline.h            # Trampoline declarations
+│       buffer.c
+│       buffer.h
+│       hde32.c
+│       hde32.h
+│       hde64.c
+│       hde64.h
+│       hook.c
+│       MinHook.def
+│       MinHook.h
+│       MinHook.rc
+│       pstdint.h
+│       table32.h
+│       table64.h
+│       trampoline.c
+│       trampoline.h
+│       
+├───miniaudio
+│       miniaudio.h
 │       
 ├───Modules
-│   │   ModuleHeader.hpp        # Central module includes
+│   │   Globals.hpp
+│   │   ModuleHeader.hpp
+│   │   ModuleManager.cpp
+│   │   ModuleManager.hpp
 │   │   
+│   ├───Alloc
+│   │       AllocateNear.cpp
+│   │       AllocateNear.hpp
+│   │       
 │   ├───Combat
 │   │   ├───Hitbox
-│   │   │       Hitbox.cpp       # Hitbox feature logic
-│   │   │       Hitbox.hpp       # Hitbox declarations
+│   │   │       Hitbox.cpp
+│   │   │       Hitbox.hpp
 │   │   │       
 │   │   └───Reach
-│   │           Reach.cpp        # Reach feature logic
-│   │           Reach.hpp        # Reach declarations
+│   │           Reach.cpp
+│   │           Reach.hpp
 │   │           
+│   ├───Info
+│   │       Info.cpp
+│   │       Info.hpp
+│   │       
 │   ├───Misc
 │   │   └───UnlockFPS
-│   │           UnlockFPS.cpp    # FPS unlock logic
-│   │           UnlockFPS.hpp    # UnlockFPS declarations
+│   │           UnlockFPS.cpp
+│   │           UnlockFPS.hpp
 │   │           
 │   ├───Movement
 │   │   ├───AutoSprint
-│   │   │       AutoSprint.cpp   # Auto-sprint feature logic
-│   │   │       AutoSprint.hpp   # AutoSprint declarations
+│   │   │       AutoSprint.cpp
+│   │   │       AutoSprint.hpp
 │   │   │       
 │   │   └───Timer
-│   │           Timer.cpp        # Timer modification logic
-│   │           Timer.hpp        # Timer declarations
+│   │           Timer.cpp
+│   │           Timer.hpp
 │   │           
+│   ├───PatternScan
+│   │       PatternScan.cpp
+│   │       PatternScan.hpp
+│   │       
 │   ├───Terminal
-│   │       Terminal.cpp         # In-game terminal logic
-│   │       Terminal.hpp         # Terminal declarations
+│   │       Terminal.cpp
+│   │       Terminal.hpp
 │   │       
 │   └───Visuals
 │       ├───CPSCounter
-│       │       CPSCounter.cpp   # CPS counter overlay logic
-│       │       CPSCounter.hpp   # CPS counter declarations
+│       │       CPSCounter.cpp
+│       │       CPSCounter.hpp
 │       │       
 │       ├───FullBright
-│       │       FullBright.cpp   # Full bright feature logic
-│       │       FullBright.hpp   # FullBright declarations
+│       │       FullBright.cpp
+│       │       FullBright.hpp
 │       │       
 │       ├───Keystrokes
-│       │   │   Keystrokes.cpp   # Keystroke overlay logic
-│       │   │   Keystrokes.hpp   # Keystrokes declarations
+│       │   │   Keystrokes.cpp
+│       │   │   Keystrokes.hpp
 │       │   │   
 │       │   └───Helper
-│       │           HelperFunctions.hpp # Keystrokes helper utilities
+│       │           HelperFunctions.hpp
 │       │           
 │       ├───MotionBlur
-│       │       MotionBlur.cpp    # Motion blur effect logic
-│       │       MotionBlur.hpp    # MotionBlur declarations
+│       │       MotionBlur.cpp
+│       │       MotionBlur.hpp
 │       │       
 │       ├───RenderInfo
-│       │       RenderInfo.cpp    # Render info overlay logic
-│       │       RenderInfo.hpp    # RenderInfo declarations
+│       │       RenderInfo.cpp
+│       │       RenderInfo.hpp
 │       │       
 │       └───Watermark
-│               Watermark.cpp    # Watermark display logic
-│               Watermark.hpp    # Watermark declarations
+│               Watermark.cpp
+│               Watermark.hpp
 │               
 ├───nlohmann
-│       json.hpp                # JSON parser header
+│       json.hpp
 │       
 └───Utils
-        HudElement.hpp         # HUD element definitions
+        HudElement.hpp
 ```
 
 ## Features
